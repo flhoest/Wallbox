@@ -22,7 +22,7 @@ wbSetMaxChargingCurrent($token,$id,$maxCurrent)
 
 > **format_time($t,$f=':')**
 
-This function is ENTER TEXT HERE
+This function is converting a number of second into a human readable hh:mm:ss format.
 
 | Input | Description |
 | ----------|----------|
