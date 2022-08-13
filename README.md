@@ -171,11 +171,11 @@ array(98) {
 
 > **wbGetToken($auth)**
 
-This function is retrieving the authentication token
+This function is retrieving the authentication token. Reminder, the token is valid 15 days, you need to manage the renewal within your code.
 
 | Input | Description |
 | ----------|----------|
-| `$auth`   | -> An array containing your credentials to the Wallbox portal | 
+| `$auth`   | An array containing your credentials to the Wallbox portal | 
 
 
 - Usage sample : 
