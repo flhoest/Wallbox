@@ -28,7 +28,7 @@
 	$outputFile="stats.csv";
 	
 	// Charger ID 
-	$chargerID=376871;
+	$chargerID=123456;
 	
 	print("Dumping data to file : ".$outputFile." every ".$sampleRate." secs\n\n");
 
