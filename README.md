@@ -137,7 +137,7 @@ array(98) {
       ["charging_time"]=>
       int(5400)
       ["user_id"]=>
-      int(253227)
+      int(233327)
       ["user_name"]=>
       string(8) "First_name"
       ["user_surname"]=>
@@ -145,7 +145,7 @@ array(98) {
       ["user_email"]=>
       string(17) "emailAddress"
       ["charger_id"]=>
-      int(376871)
+      int(12345)
       ["charger_name"]=>
       string(20) "PulsarPlus SN 12345"
       ["group_id"]=>
