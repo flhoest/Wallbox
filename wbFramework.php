@@ -9,6 +9,17 @@
 //                                                        	
 //    API Hack (C) 2022 - Frederic Lhoest
 
+	// Function index in alphabetical order (total 5)
+	//------------------------------------------------
+
+	// format_time($t,$f=':')
+	// wbGetCharger($token,$id)
+	// wbGetSessionList($token,$id,$startDate,$endDate)
+	// wbGetToken($auth)
+	// wbSetMaxChargingCurrent($token,$id,$maxCurrent)
+	
+/*
+
 /*
 
 Note to myslef :
