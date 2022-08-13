@@ -21,7 +21,7 @@
 
 	// Token are valid for 15 days. Think at renewing them !
 	$token="long_string_token";
-	$id="376871";
+	$id="12345";
 	
 	// =======================================
 	// Main entry point
