@@ -15,7 +15,7 @@
 	// Variables Definition
 
 	$auth=array(
-			"username" => "<emailAddress",
+			"username" => "emailAddress",
 			"password" => "password"
 			);
 
