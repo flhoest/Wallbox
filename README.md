@@ -3,7 +3,7 @@
 ![logo0](https://s28.q4cdn.com/641324054/files/design/svg/Wallbox_Logotype-Isotype_TM-b.svg)	![logo1](https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/062015/php_0.png?itok=W6WL-Rbh)	
 
 ## Background
-This project's goal is to provide anyone who needs to script automation, a collection of functions that call Wallbox's APIs.
+This project's goal is to provide anyone who needs to script automation, a collection of functions that call Wallbox's APIs. Do not hesitate to check the supporting blog post here : https://www.lets-talk-about.tech/2022/08/wallbox-get-most-of-it-with-api.html 
 
 ## Functions Reference
 
