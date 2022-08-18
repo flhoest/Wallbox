@@ -14,8 +14,13 @@ The below section is a list of all existing functions in this framework.
 format_time($t,$f=':')
 wbGetCharger($token,$id)
 wbGetSessionList($token,$id,$startDate,$endDate)
+wbGetStatus($token,$id)
 wbGetToken($auth)
+wbLockCharger($token,$id)
+wbPauseCharge($token,$id)
+wbResumeCharge($token,$id)
 wbSetMaxChargingCurrent($token,$id,$maxCurrent)
+wbUnlockCharger($token,$id)
 ````
 
 ### Explanation
