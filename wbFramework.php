@@ -106,7 +106,6 @@
 		$config_params=" {\"action\":2}";
 
    		$curl = curl_init();
-// 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
    		
 		curl_setopt($curl, CURLOPT_POST, 1);
 		curl_setopt($curl, CURLOPT_POSTFIELDS,$config_params);
@@ -138,8 +137,7 @@
 		$config_params=" {\"action\":1}";
 
    		$curl = curl_init();
-// 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
-   		
+
 		curl_setopt($curl, CURLOPT_POST, 1);
 		curl_setopt($curl, CURLOPT_POSTFIELDS,$config_params);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
