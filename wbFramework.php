@@ -1,54 +1,217 @@
 <?php
 
-//                     .__   .__  ___.                    
-//    __  _  _______   |  |  |  | \_ |__    ____ ___  ___ 
-//    \ \/ \/ /\__  \  |  |  |  |  | __ \  /  _ \\  \/  / 
-//     \     /  / __ \_|  |__|  |__| \_\ \(  <_> )>    <  
-//      \/\_/  (____  /|____/|____/|___  / \____//__/\_ \ 
-//                  \/                 \/              \/ 
-//                                                        	
-//    API Hack (C) 2022 - Frederic Lhoest
+	//////////////////////////////////////////////////////////////////////////////
+	//                     Wallbox Php Framework version 0.5                    //
+	//                        (c) 2022 - Frederic Lhoest                        //
+	//////////////////////////////////////////////////////////////////////////////
+	//                       Created on macOS with BBEdit                       //
+	//////////////////////////////////////////////////////////////////////////////
 
-	// Function index in alphabetical order (total 5)
+	//                     .__   .__  ___.                    
+	//    __  _  _______   |  |  |  | \_ |__    ____ ___  ___ 
+	//    \ \/ \/ /\__  \  |  |  |  |  | __ \  /  _ \\  \/  / 
+	//     \     /  / __ \_|  |__|  |__| \_\ \(  <_> )>    <  
+	//      \/\_/  (____  /|____/|____/|___  / \____//__/\_ \ 
+	//                  \/                 \/              \/ 
+
+	//
+	// Function index in alphabetical order (total 10)
 	//------------------------------------------------
 
 	// format_time($t,$f=':')
 	// wbGetCharger($token,$id)
 	// wbGetSessionList($token,$id,$startDate,$endDate)
+	// wbGetStatus($token,$id)
 	// wbGetToken($auth)
+	// wbLockCharger($token,$id)
+	// wbPauseCharge($token,$id)
+	// wbResumeCharge($token,$id)
 	// wbSetMaxChargingCurrent($token,$id,$maxCurrent)
+	// wbUnlockCharger($token,$id)	
+
+	// ==========================================================================
+	//                           Code starts here
+	// ==========================================================================
+
+	// ----------------------------
+	// Function locking the charger
+	// ----------------------------
 	
-/*
+	function wbLockCharger($token,$id)
+	{
+		$API="api.wall-box.com";
 
-/*
+		$config_params="{\"locked\":1}";
 
-Note to myslef :
+   		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+   		
+		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_POSTFIELDS,$config_params);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+							"Authorization: Bearer ".$token,
+							'Accept: application/json, text/plain, */*',
+							'Content-Type: application/json;charset=utf-8'
+							));
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_URL, "https://".$API."/v2/charger/".$id);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
-Charger Status Code : 
+		$result = curl_exec($curl);
+		curl_close($curl);
+		return json_decode($result)->data->chargerData->locked;
+	}
 
-class Statuses(MultiValueEnum):
-    WAITING = 164, 180, 181, 183, 184, 185, 186, 187, 188, 189,
-    CHARGING = 193, 194, 195,
-    READY = 161, 162,
-    PAUSED = 178, 182,
-    SCHEDULED = 177, 179,
-    DISCHARGING = 196,
-    ERROR = 14, 15,
-    DISCONNECTED = 0, 163, None,
-    LOCKED = 209, 210, 165,
-    UPDATING = 166
-    
-    https://community.jeedom.com/t/pluging-wallbox/85244/3
-	https://community.homey.app/t/wallbox-pulsar-plus-charger-lock-unlock-pause-resume/54616/2    
-    https://community.home-assistant.io/t/wallbox-pulsar-plus-integration/200339    
+	// ------------------------------
+	// Function unlocking the charger
+	// ------------------------------
 
-	/v4/groups/257061/sessions/calculate/daily?filters={"filters":[{"field":"start_date","operator":"gte","value":"2022-07-27T04:13:57+0200"},{"field":"end_date","operator":"lte","value":"2022-08-02T04:13:57+0200"},{"field":"charger_id","operator":"eq","value":376871}]}
-	/sessions/filters?group_id=257061
-	/v4/groups/257061/charger-charging-sessions?filters={"filters":[{"field":"start_time","operator":"gte","value":1659132000},{"field":"end_time","operator":"lte","value":1659304800}]}&limit=50&offset=0
-	/users/data/253447
-	/chargers/config/376871
+	function wbUnlockCharger($token,$id)
+	{
+		$API="api.wall-box.com";
+
+		$config_params="{\"locked\":0}";
+
+   		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+   		
+		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_POSTFIELDS,$config_params);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+							"Authorization: Bearer ".$token,
+							'Accept: application/json, text/plain, */*',
+							'Content-Type: application/json;charset=utf-8'
+							));
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_URL, "https://".$API."/v2/charger/".$id);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+		$result = curl_exec($curl);
+		curl_close($curl);
+		return json_decode($result)->data->chargerData->locked;
+	}
+
+	// -----------------------------------
+	// Function pausing a charging session
+	// -----------------------------------
 	
-*/
+	function wbPauseCharge($token,$id)
+	{
+		$API="api.wall-box.com";
+
+		$config_params=" {\"action\":2}";
+
+   		$curl = curl_init();
+// 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+   		
+		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_POSTFIELDS,$config_params);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+							"Authorization: Bearer ".$token,
+							'Accept: application/json, text/plain, */*',
+							'Content-Type: application/json;charset=utf-8'
+							));
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_URL, "https://".$API."/v3/chargers/".$id."/remote-action");
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+		$result = curl_exec($curl);
+		curl_close($curl);
+
+		return $result;
+	}
+
+	// ------------------------------------
+	// Function resuming a charging session
+	// ------------------------------------
+	
+	function wbResumeCharge($token,$id)
+	{
+		$API="api.wall-box.com";
+
+		$config_params=" {\"action\":1}";
+
+   		$curl = curl_init();
+// 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+   		
+		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_POSTFIELDS,$config_params);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+							"Authorization: Bearer ".$token,
+							'Accept: application/json, text/plain, */*',
+							'Content-Type: application/json;charset=utf-8'
+							));
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_URL, "https://".$API."/v3/chargers/".$id."/remote-action");
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+		$result = curl_exec($curl);
+		curl_close($curl);
+
+		return $result;
+	}
+
+	// ----------------------------------------------
+	// Function retrieving the current charger status
+	// ----------------------------------------------
+
+	function wbGetStatus($token,$id)
+	{
+		$data=wbGetCharger($token,$id);
+		
+		switch ($data->status)
+		{
+			case 164:
+			case 180:
+			case 181:
+			case 183:
+			case 184:
+			case 185:
+			case 186:
+			case 187:
+			case 188:
+			case 189: $status="WAITING";
+			break;
+			case 193:
+			case 194:
+			case 195: $status="CHARGING";
+			break;
+			case 161:
+			case 162: $status="READY";
+			break;
+			case 178:
+			case 182: $status="PAUSED";
+			break;
+			case 177:
+			case 179: $status="SCHEDULED";
+			break;
+			case 196: $status="DISCHARGING";
+			break;
+			case 14:
+			case 15: $status="ERROR";
+			break;
+			case 0:
+			case 163: $status="DISCONNECTED";
+			break;
+			case 209:
+			case 210:
+			case 165: $status="LOCKED";
+			break;
+			case 166: $status="UPDATING";
+			break;
+			default: $status="UNKNOWN";
+		}		
+		
+		return $status;
+	}
 
 	// ------------------------------------------------------
 	// Function retrieving the authentication token
