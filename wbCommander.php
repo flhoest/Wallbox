@@ -11,8 +11,6 @@
 	//      \/\_/  (____  /|____/|____/|___  / \____//__/\_ \ 
 	//                  \/                 \/              \/ 
 
-	// Step 1 : get basic parameters and settings from the charger defined in wbCredentials.php
-
 	function displayMenu()
 	{
 		global $selection, $version;
