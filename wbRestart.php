@@ -20,11 +20,7 @@
 
 	// Charger ID 
 	$chargerID=12345;
-	
-	// ------------------------------------------
-	// Function restarting the charger $chargerID
-	// ------------------------------------------		
-		
+
 	// Get new token
 	$wbToken=wbGetToken($auth);
 	
