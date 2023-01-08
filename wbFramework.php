@@ -1,8 +1,8 @@
 <?php
 
 	//////////////////////////////////////////////////////////////////////////////
-	//                     Wallbox Php Framework version 0.5                    //
-	//                        (c) 2022 - Frederic Lhoest                        //
+	//                     Wallbox Php Framework version 0.7                    //
+	//                        (c) 2023 - Frederic Lhoest                        //
 	//////////////////////////////////////////////////////////////////////////////
 	//                       Created on macOS with BBEdit                       //
 	//////////////////////////////////////////////////////////////////////////////
@@ -15,20 +15,22 @@
 	//                  \/                 \/              \/ 
 
 	//
-	// Function index in alphabetical order (total 10)
+	// Function index in alphabetical order (total 12)
 	//------------------------------------------------
 
 	// format_time($t,$f=':')
+	// wbColorBold($string)
 	// wbGetCharger($token,$id)
 	// wbGetSessionList($token,$id,$startDate,$endDate)
 	// wbGetStatus($token,$id)
 	// wbGetToken($auth)
 	// wbLockCharger($token,$id)
 	// wbPauseCharge($token,$id)
+	// wbRestart($token,$chargerID)
 	// wbResumeCharge($token,$id)
 	// wbSetMaxChargingCurrent($token,$id,$maxCurrent)
-	// wbUnlockCharger($token,$id)	
-
+	// wbUnlockCharger($token,$id)
+	
 	// ==========================================================================
 	//                           Code starts here
 	// ==========================================================================
@@ -106,6 +108,7 @@
 		$config_params=" {\"action\":2}";
 
    		$curl = curl_init();
+// 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
    		
 		curl_setopt($curl, CURLOPT_POST, 1);
 		curl_setopt($curl, CURLOPT_POSTFIELDS,$config_params);
@@ -137,7 +140,7 @@
 		$config_params=" {\"action\":1}";
 
    		$curl = curl_init();
-
+   		
 		curl_setopt($curl, CURLOPT_POST, 1);
 		curl_setopt($curl, CURLOPT_POSTFIELDS,$config_params);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
@@ -376,4 +379,49 @@
 		return json_decode($result)->data;
 	}
 
+	// ----------------------------
+	// Function restarting the unit
+	// ----------------------------
+
+	function wbRestart($token,$chargerID)
+	{
+		$API="api.wall-box.com";
+
+		$config_params="
+				{
+				  \"action\": 3
+				}			
+				";
+
+   		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+   		
+		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_POSTFIELDS,$config_params);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+							"Authorization: Bearer ".$token,
+							'Accept: application/json, text/plain, */*',
+							'Content-Type: application/json;charset=utf-8'
+							));
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_URL, "https://".$API."/v3/chargers/".$chargerID."/remote-action");
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+		$result = curl_exec($curl);
+		curl_close($curl);
+
+		return $result;
+	}
+	
+	// ------------------------------------
+	// Function displaying a string in bold
+	// ------------------------------------
+	
+	function wbColorBold($string)
+	{
+			return ("\e[1;37m".$string."\033[0m");
+	}
+	
 ?>
